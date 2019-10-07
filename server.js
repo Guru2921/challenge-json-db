@@ -11,10 +11,11 @@ app.use(bodyParser.urlencoded({ extended : true}))
 app.use(express.json({ extended : true}))
 
 /*-------------  REST APIS -------------*/
-app.get('/health', api.getHealth)
-app.put('/:studentId/*', api.putStudent)
-app.get('/:studentId/*', api.getStudent)
-app.delete('/:studentId/*', api.deleteStudent)
+app.put('/:studentId/', api.putStudent)
+app.get('/:studentId/', api.getStudent)
+app.put('/:studentId/*', api.putStudentProperty)
+app.get('/:studentId/*', api.getStudentProperty)
+app.delete('/:studentId/*', api.deleteStudentProperty)
 
 /*-------------  MIDDLEWARES -------------*/
 app.use(middleware.handleError)
