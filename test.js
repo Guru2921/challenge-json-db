@@ -57,13 +57,20 @@ tape('rest', async function (t) {
     if (err) t.error(err)
     t.ok(body['x'] == "test1", 'GET NESTED PROPERTY CHECK')
   })
-
   jsonist.get(`${endpoint}/ivan1`, (err, body) => {
     if (err) t.error(err)
     t.ok(body['status'] == 404, 'GET NO FILE CHECK')
   })
-  jsonist.get(`${endpoint}/ivan/english`, (err, body) => {
+  jsonist.get(`${endpoint}/ivan1`, (err, body) => {
+    if(err) t.error(err)
+    t.ok(body['status'] == 404, 'GET NO FILE CHECK')
+  })
+  jsonist.get(`${endpoint}/ivan/english/dialog`, (err, body) => {
     if (err) t.error(err)
+    t.ok(body['status'] == 404, 'GET NO PROPERTY CHECK')
+  })
+  jsonist.get(`${endpoint}/ivan/english/grammar/present`, (err, body) => {
+    if(err) t.error(err)
     t.ok(body['status'] == 404, 'GET NO PROPERTY CHECK')
   })
 
@@ -73,6 +80,26 @@ tape('rest', async function (t) {
   jsonist.delete(`${endpoint}/ivan/math`, (err, body) => {
     if (err) t.error(err)
     t.ok(body['status'] == 200, 'DELETE PROPERTY CHECK')
+  })
+
+  jsonist.delete(`${endpoint}/ivan1/math`, (err, body) => {
+    if(err) t.error(err)
+    t.ok(body['status'] == 404, 'DELETE FILE NOT FOUND')
+  })
+
+  jsonist.delete(`${endpoint}/ivan/english/grammar`, (err, body) => {
+    if(err) t.error(err)
+    t.ok(body['status'] == 404, 'DELETE PROPERTY NOT FOUND')
+  })
+
+  jsonist.delete(`${endpoint}/ivan/english/talking`, (err, body) => {
+    if(err) t.error(err)
+    t.ok(body['status'] == 404, 'DELETE PROPERTY NOT FOUND')
+  })
+
+  jsonist.delete(`${endpoint}/ben/english/talking`, (err, body) => {
+    if(err) t.error(err)
+    t.ok(body['status'] == 404, 'DELETE PROPERTY NOT FOUND')
   })
 
   await sleep(1000)
